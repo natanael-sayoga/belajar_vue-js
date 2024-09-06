@@ -1,0 +1,18 @@
+After being created, vue will generated a bunch of file. Tetapi intinya berada pada file
+INDEX.HTML dan MAIN.JS
+
+when we check index.html, it is as if nothing is being written there, but this is not true
+dengan vue js, UI Element tidak lagi diatur dengan html vanila, tetapi dengan file berekstensi
+.vue
+
+di dalam html akan ada sebuah div dengan class #app
+
+di script main.js pertama-tama akan kita inisiasi application instance yang akan meminta parameter
+sebuah root element sebagai entry point vue. AGAR BISA DI-RENDER, maka application instance ini harus di-bind
+ke dalam suatu container
+
+inilah kenapa di INDEX.HTML terdapat div dengan class #app, setelah diinisiasi, maka application instance akan
+dirender di index.html, karena application instance yg dirender merupakan VUE Component, saat kita 
+melakukan inspect element, maka yg terender bukan index.html tetapi App.vue
+
+App.vue is a root component, hence with it contains both HelloWorld.vue and TheWelcome.vue
