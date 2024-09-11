@@ -1,39 +1,38 @@
 <template>
-    <div class="container">
-        <h1>
-            {{ pages[0].title }}
-        </h1>
-        <div>
-            {{ pages[0].content }}
-        </div>
+    <div v-if="pages.length>0">
+        <PageNavBar
+            v-bind:pages="pages"
+            v-bind:current-page="currentPage"
+            v-bind:on-click-listener="(index) => {currentPage = index}">
+        </PageNavBar>
+        <PageContent 
+            v-bind:page="pages[currentPage]">
+        </PageContent>
     </div>
-    <div class="container border rounded">
-        <form action="">
-            <div class="form-group">
-                <label for="todo">To Do</label>
-                <input v-model="todoInput" class="form-control" id="todo" aria-describedby="todoHelp" placeholder="Type the thing you have to do today!">
-                <small id="todoHelp" class="form-text text-muted">{{ getFormatedDate }}</small>
-            </div>
-            <button class="btn btn-primary" v-on:click.prevent="addTodos(todoInput)">Enter</button>
-        </form>
-        <ol v-if="todos.length>0">
-            <li v-for="event in todos">{{ event }}</li>
-        </ol>
-    </div>
+    <ToDoForm
+        v-bind:formated-date="getFormatedDate"
+        v-show="currentPage==0">
+    </ToDoForm>
 </template>
 
 <script>
+import PageContent from './components/PageContent.vue';
+import ToDoForm from './components/ToDoForm.vue';
+import PageNavBar from './components/PageNavBar.vue';
+
 export default{
+    components:{
+        PageNavBar,
+        PageContent,
+        ToDoForm
+    },
+    created(){
+        this.pages = this.getPages()
+    },
     data(){
         return{
-            pages:[
-                    {
-                        title: 'about',
-                        content: 'Project ini dibuat untuk keperluan belajar Vue Js'
-                    }
-            ],
-            todoInput:"",
-            todos:[]
+            currentPage:0,
+            pages:[]
         }
     },
     computed:{
@@ -50,11 +49,11 @@ export default{
         }
     },
     methods:{
-        addTodos(todo){
-            if(todo!=""){
-                this.todos.push(todo)
-            }
-            console.log(this.todos)
+        async getPages(){
+            //let myPages = await fetch("../public/pages.json")
+            let myPages = await fetch("../src/datas/pages.json")
+            let myJsonPages = await myPages.json()
+            this.pages = myJsonPages
         }
     }
 }

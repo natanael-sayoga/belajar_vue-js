@@ -1,0 +1,12 @@
+[
+    {
+        "title": "about",
+        "url": "about.html",
+        "content": "Project ini dibuat untuk keperluan belajar Vue Js"
+    },
+    {
+        "title": "contacts",
+        "url": "contacts.html",
+        "content": "github: NatanaelSayoga"
+    }
+]
