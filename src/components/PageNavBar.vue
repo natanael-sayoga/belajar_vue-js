@@ -16,6 +16,10 @@
                     :to="`/todo/list`"
                     >
                 </NavBarLink>
+                <NavBarLink
+                    v-bind:page="{title: 'Json Placeholder API'}"
+                    :to="`/jsonplaceholderapi`">
+                </NavBarLink>
             </ul>
         </div>
     </nav>

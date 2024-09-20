@@ -1,10 +1,19 @@
 # About
-Project ini dibuat untuk keperluan belajar Set Up Vue.js, akan kita buat sebuah Single Page Application pada local machine, [stylesheet yang dipakai](https://getbootstrap.com/)
+Project ini dibuat untuk keperluan belajar Set Up Vue.js, akan kita buat sebuah Single Page Application pada local machine
 
 # Prerequisite
 1. Pastikan Node.js sudah terinstall, tambahkan ke path variable (windows)
 2. Install Vue CLI
 3. Install Vue Router version 4
+4. Install Axios
+
+# Dependecy:
+1. [Node and NPM](https://nodejs.org/en/download/package-manager)
+2. [Vue CLI](https://cli.vuejs.org/guide/installation.html)
+3. [Vue JS](https://vuejs.org/guide/quick-start)
+4. [Vue Router](https://router.vuejs.org/installation.html)
+5. [Axios](https://axios-http.com/docs/intro)
+6. [Bootstrap stylesheet](https://getbootstrap.com/)
 
 # References
 - [Node Official Website](https://nodejs.org/en/download/package-manager)
@@ -14,6 +23,9 @@ Project ini dibuat untuk keperluan belajar Set Up Vue.js, akan kita buat sebuah 
 - [Localstorage](https://www.w3schools.com/jsref/prop_win_localstorage.asp)
 - [Creating a router instance](https://router.vuejs.org/guide/)
 - [Accessing url parameter using router instance](https://router.vuejs.org/guide/essentials/dynamic-matching.html)
+- [Axios Documentation](https://axios-http.com/docs/instance)
+- [Sample Backend App](https://github.com/bezkoder/spring-boot-h2-database-crud)
+
 ### Compile and Hot-Reload for Development
 
 ```sh

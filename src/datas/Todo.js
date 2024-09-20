@@ -17,11 +17,16 @@ export default{
         localStorage.setItem('todos', JSON.stringify(todosArr))
     },
     deleteTodo(indexSet){
+        //note: it is better to use delete() rather than spile() when deleting a lot of elements in an array
+        //then filter elements that is undefined
         console.log(indexSet)
         if(indexSet.size>0){
             indexSet.forEach(index => {
-                todosArr.splice(index, 1)
-            });
+                delete todosArr[index]
+            })
+            todosArr = todosArr.filter((element) => {
+                return (typeof element !== "undefined")
+            })
             localStorage.setItem('todos', JSON.stringify(todosArr))
         }
         console.log(`${indexSet.size} item(s) deleted`)
