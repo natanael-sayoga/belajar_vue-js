@@ -5,4 +5,6 @@ const $axiosPlaceholderAPI = axios.create({
     headers: {'X-Custom-Header': 'Belajar JSON Placeholder API'}
 })
 
+$axiosPlaceholderAPI.defaults.headers.common['my-custom-header'] = "coba bikin custom header";
+
 export default $axiosPlaceholderAPI
