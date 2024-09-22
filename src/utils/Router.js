@@ -7,6 +7,10 @@ import FormUpdateToDo from "@/views/FormUpdateToDo.vue";
 import JSReqPage from "@/views/JSReqPage.vue";
 import JSGetRequest from "@/views/JSGetRequest.vue";
 import JSOtherRequest from "@/views/JSOtherRequest.vue";
+import TutorialHomePage from "@/views/TutorialHomePage.vue";
+import TutorialList from "@/views/TutorialList.vue";
+import TutorialDetail from "@/views/TutorialDetail.vue";
+import TutorialAdd from "@/views/TutorialAdd.vue";
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -30,6 +34,15 @@ const router = createRouter({
                 {path: 'put', component: JSOtherRequest},
                 {path: 'patch', component: JSOtherRequest},
                 {path: 'delete', component: JSOtherRequest},
+            ]
+        },
+        {
+            path:'/tutorialapi',
+            component: TutorialHomePage,
+            children:[
+                {path: 'list', component:TutorialList},
+                {path: 'list/:id', component:TutorialDetail},
+                {path: 'add', component:TutorialAdd},
             ]
         }
     ]

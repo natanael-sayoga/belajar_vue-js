@@ -20,6 +20,10 @@
                     v-bind:page="{title: 'Json Placeholder API'}"
                     :to="`/jsonplaceholderapi`">
                 </NavBarLink>
+                <NavBarLink
+                    v-bind:page="{title: 'Spring Boot H2 API'}"
+                    :to="`/tutorialapi/list`">
+                </NavBarLink>
             </ul>
         </div>
     </nav>

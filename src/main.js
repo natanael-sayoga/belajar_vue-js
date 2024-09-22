@@ -1,8 +1,8 @@
 import { createApp } from 'vue'
 import MyApp from './MyApp.vue'
 import router from './utils/Router'
-import $todos from './datas/Todo'
-import $pages from './datas/PagesData'
+import $todos from './services/Todo'
+import $pages from './services/PagesData'
 
 const myApp = createApp(MyApp)
 

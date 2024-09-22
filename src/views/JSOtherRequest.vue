@@ -89,7 +89,7 @@
     
     <div v-if="data.errors && data.errors.length > 0">
         <div v-for="error of data.errors" class="card text-white bg-danger mb-3">
-            <div class="card-header">ERROR!</div>
+            <div class="card-header">ERROR CODE: {{ error.code }}</div>
             <div class="card-body">
                 <p class="card-text">{{error.message}}</p>
             </div>
