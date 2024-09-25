@@ -3,6 +3,7 @@ import MyApp from './MyApp.vue'
 import router from './utils/Router'
 import $todos from './services/Todo'
 import $pages from './services/PagesData'
+import $store from './store'
 
 const myApp = createApp(MyApp)
 
@@ -23,6 +24,7 @@ if(localStorage.getItem('todos')===null){
 }
 
 myApp.use(router)
+myApp.use($store)
 myApp.provide("$pages", $pages)
 myApp.provide("$todos", $todos)
 myApp.mount('#myApp')

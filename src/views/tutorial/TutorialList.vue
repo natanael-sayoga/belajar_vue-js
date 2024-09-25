@@ -71,11 +71,11 @@ import { reactive, onBeforeMount } from 'vue';
 
 
 let data = reactive({
-    tutorials: [],
-    currentTutorial: null,
+    tutorials: [], //
+    currentTutorial: null, //
     currentIndex:-1,
     searchTitle: "",
-    errors: []
+    errors: [] //
 })
 
 function retrieveTutorials(){

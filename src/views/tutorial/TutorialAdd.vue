@@ -51,13 +51,14 @@ import { reactive } from 'vue';
 
 let data = reactive({
     tutorial: {
+        //
         id: null,
         title: "",
         description: "",
         published: false
     },
     submitted: false,
-    errors: []
+    errors: [] //
 })
 
 function addTutorial(){
