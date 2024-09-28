@@ -1,6 +1,5 @@
 import { Store } from "vuex";
 import HTTPH2service from "@/services/HTTP-H2service";
-import { useRouter, useRoute } from "vue-router";
 
 const $store = new Store({
     state:{
@@ -21,7 +20,7 @@ const $store = new Store({
             state.currentTutorial = currentTutorial
         },
         setErrors(state,errorsObj){
-            state.errors.push(errorsObj)
+            state.errors = [errorsObj]
         },
         clearTutorials(state){
             state.tutorials = []
@@ -45,77 +44,72 @@ const $store = new Store({
         }
     },
     actions:{
-        fetchAllTutorial(context){
-            HTTPH2service
-            .getAll()
-            .then(
-                response => {
-                    console.log(response)
-                    context.commit('setTutorials', response.data)
-                }
-            )
-            .catch(
-                error => {
-                    console.log(error)
-                    context.commit('setErrors', error)
-                }
-            )
+        async fetchAllTutorial(context){
+            try{
+                let response = await HTTPH2service.getAll()
+                context.commit('setTutorials', response.data)
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }finally{
+                console.log('fetching is done')
+            }
         },
 
-        fetchSingleTutorial(context, id){
-            HTTPH2service
-            .get(id)
-            .then(
-                response => {
-                    console.log(response)
-                    context.commit('setCurrentTutorial', response.data)
-                }
-            )
-            .catch(
-                error => {
-                    console.log(error)
-                    context.commit('setErrors', error)
-                }
-            )
+        async fetchSingleTutorial(context, id){
+            try{
+                let response = await HTTPH2service.get(id)
+                context.commit('setCurrentTutorial', response.data)
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }
         },
 
-        fetchTutorialByTitle(context, title){
-            HTTPH2service
-            .findByTitle(title)
-            .then(
-                response => {
-                    console.log(response)
-                    context.commit('setTutorials', response.data)
-                }
-            )
-            .catch(
-                error => {
-                    console.log(error)
-                    context.commit('setErrors', error)
-                }
-            )
+        async fetchTutorialByTitle(context, title){
+            try{
+                let response = await HTTPH2service.findByTitle(title)
+                context.commit('setTutorials', response.data)
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }
         },
 
-        createTutorial(newTutorial){
-            HTTPH2service
-            .create(newTutorial)
+        async createTutorial(context, newTutorial){
+            try{
+                await HTTPH2service.create(newTutorial)
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }
         },
 
-        removeAllTutorials(){
-            HTTPH2service
-            .deleteAll()
-            .then(
-                response => {
-                    console.log(response)      
-            })
-            .catch(
-                error => {
-                    data.errors.push(error)
-            })
+        async updateTutorial(context, tutorialId, tutorialObj){
+            try{
+                await HTTPH2service.update(tutorialId, tutorialObj)
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }
         },
 
-        deleteTutorial() {
-            HTTPH2service.delete(data.currentTutorial.id)
+        async removeAllTutorials(context){
+            try{
+                await HTTPH2service.deleteAll()
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }
+        },
+
+        async deleteTutorial(context, tutorialId) {
+            try{
+                await HTTPH2service.delete(tutorialId)
+            }catch(error){
+                console.log(error)
+                context.commit('setErrors', error)
+            }
         }
     }
 })

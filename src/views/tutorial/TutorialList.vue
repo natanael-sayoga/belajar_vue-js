@@ -9,7 +9,7 @@
                 v-model="data.searchTitle"/>
                 <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button"
-                    @click="searchTitle()">
+                    @click="$store.dispatch('fetchTutorialByTitle', data.searchTitle)">
                     Search
                 </button>
                 </div>
@@ -21,7 +21,7 @@
             <ul class="list-group">
                 <li class="list-group-item"
                     :class="{ active: index == data.currentIndex }"
-                    v-for="(tutorial, index) in data.tutorials"
+                    v-for="(tutorial, index) in $store.getters.getTutorials"
                     :key="index"
                     @click="setActiveTutorial(tutorial, index)">
                     {{ tutorial.title }}
@@ -55,7 +55,7 @@
     </div>
 
     <hr>
-    <div v-if="data.errors && data.errors.length > 0">
+    <div v-if="$store.getters.getErrors && $store.getters.getErrors.length > 0">
         <div v-for="error of data.errors" class="card text-white bg-danger mb-3">
             <div class="card-header">ERROR CODE: {{ error.code }}</div>
             <div class="card-body">
@@ -66,145 +66,43 @@
 </template>
 
 <script setup>
-import HTTPH2service from '@/services/HTTP-H2service';
 import { reactive, onBeforeMount } from 'vue';
+import { useStore } from 'vuex';
 
-
+let $store = useStore()
 let data = reactive({
-    tutorials: [], //
-    currentTutorial: null, //
+    tutorials: [],
+    errors: [],
+    currentTutorial: null,
     currentIndex:-1,
     searchTitle: "",
-    errors: [] //
 })
-
-function retrieveTutorials(){
-    HTTPH2service
-    .getAll()
-    .then(
-        response => {
-            console.log("TutorialList.vue response")
-            console.log(response)
-            data.tutorials = response.data
-        }
-    )
-    .catch(
-        error => {
-            data.errors.push(error)
-        }
-    )
-}
 
 function setActiveTutorial(tutorial, index){
     data.currentTutorial = tutorial
     data.currentIndex = index
 }
 
-function searchTitle(){
-    HTTPH2service
-    .findByTitle(data.searchTitle)
-    .then(
-        response => {
-            console.log("TutorialList.vue response")
-            console.log(response)
-            data.tutorials = response.data
-        }
-    )
-    .catch(
-        error => {
-            data.errors.push(error)
-        }
-    )
-}
-
 function removeAllTutorials(){
-    HTTPH2service
-    .deleteAll()
-    .then(
-        response => {
-            console.log("TutorialList.vue response")
-            console.log(response)
-            refreshList()
-        }
-    )
-    .catch(
-        error => {
-            data.errors.push(error)
-        }
-    )
+    $store.dispatch('removeAllTutorials')
+    if(data.errors.length == 0){
+        refreshList()
+    }
 }
 
-function refreshList(){
-    retrieveTutorials()
+async function refreshList(){
+    await $store.dispatch('fetchAllTutorial')
+    data.tutorials = $store.getters.getTutorials
+    data.errors = $store.getters.getErrors
     data.currentTutorial = null
     data.currentIndex = -1
 }
 
 onBeforeMount(
-    () => {
-        retrieveTutorials()
+    async () => {
+        await $store.dispatch('fetchAllTutorial')
+        data.tutorials = $store.getters.getTutorials
+        data.errors = $store.getters.getErrors
     }
 )
-
-// export default {
-//   name: "tutorials-list",
-//   data() {
-//     return {
-//       tutorials: [],
-//       currentTutorial: null,
-//       currentIndex: -1,
-//       title: ""
-//     };
-//   },
-//   methods: {
-//     retrieveTutorials() {
-//       HTTPH2service.getAll()
-//         .then(response => {
-//           this.tutorials = response.data;
-//           console.log(response.data);
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     },
-
-//     refreshList() {
-//       this.retrieveTutorials();
-//       this.currentTutorial = null;
-//       this.currentIndex = -1;
-//     },
-
-//     setActiveTutorial(tutorial, index) {
-//       this.currentTutorial = tutorial;
-//       this.currentIndex = tutorial ? index : -1;
-//     },
-
-//     removeAllTutorials() {
-//       HTTPH2service.deleteAll()
-//         .then(response => {
-//           console.log(response.data);
-//           this.refreshList();
-//         })
-//         .catch(e => {
-//           console.log(e);
-//         });
-//     },
-    
-//     searchTitle() {
-//         HTTPH2service.findByTitle(this.title)
-//             .then(response => {
-//                 this.tutorials = response.data;
-//                 this.setActiveTutorial(null);
-//                 console.log(response.data);
-//             })
-//                 .catch(e => {
-//                 console.log(e);
-//             });
-//     }
-//   },
-//   mounted() {
-//     this.retrieveTutorials();
-//   }
-//};
-
 </script>
